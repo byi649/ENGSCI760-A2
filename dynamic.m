@@ -16,14 +16,15 @@
 clear all;
 M=10000;
 
-U=10;
-D=10;
+U=0;
+D=0;
 p=[40;42;38;29;25;26;38;16;24;32;36;48];
 
 V=M*ones(3*11*13,1);
 
-V(getIndex(,,13))=; %Complete this line, which sets the value function in hour 13 (N+1)
-V(getIndex(,,13))=; %Complete this line, which sets the value function in hour 13 (N+1)
+V(getIndex(0,0,13))=0; %Complete this line, which sets the value function in hour 13 (N+1)
+V(getIndex(1,0,13))=D; %Complete this line, which sets the value function in hour 13 (N+1)
+V(getIndex(2,0,13))=D; %Complete this line, which sets the value function in hour 13 (N+1)
 
 actions=zeros(3*11*13,1);
 
@@ -31,8 +32,8 @@ for t = 12:-1:1
     for x=0:2
         for r=0:1000:10000
             index=getIndex(x,r,t);
-            for a= %Complete this line, which loops over feasible actions (the min function will be useful)
-                next_index=getIndex(,,t+1); %Complete this line, which finds to index of the value function the next period,
+            for a=[0, min(r/1000, 1), min(r/1000, 2)]%Complete this line, which loops over feasible actions (the min function will be useful)
+                next_index=getIndex(a,r-1000*a,t+1); %Complete this line, which finds to index of the value function the next period,
                                            %given you're in state (x,r) at the beginning of period t and you take action a.
 
                 temp=stage_cost(x,a,t,U,D,p) + V(next_index); %finds the stage cost + future cost of action a

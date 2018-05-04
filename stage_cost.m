@@ -11,15 +11,15 @@ function cost = stage_cost(x, a, t, U, D, p)
     
     if(x==0)
         if(a==0)
-            cost=; %Complete this line
+            cost=0; %Complete this line
         else
-            cost=; %Complete this line
+            cost=U + floor(2.5*a)*p(t); %Complete this line
         end
     else
         if(a==0)
-            cost=; %Complete this line
+            cost=D; %Complete this line
         else
-            cost=; %Complete this line
+            cost=floor(2.5*a)*p(t); %Complete this line
         end
     end 
 end
