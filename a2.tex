@@ -131,6 +131,25 @@
 	&= \frac{1}{9} \bigg[3r^2-\frac{2}{3}r^3\bigg]^3_0 \\
 	&= 1
 	\end{align*}
+	
+	\item Accept if \(R \geq 1\) \\
+	Reject otherwise
+	
+	\item Let stages: \(n = 1, 2, \dots, N\) \\
+	States: \(x = (h, R)\) where \(h = 1\) if we have accepted a candidate, 0 otherwise, and \(R\) being the reward from the current candidate. \\ \\
+	Our recursion is then:
+	\begin{equation*}
+	V_n(h, R) = \text{max}\{R, \mathcal{V}_{n+1}\}
+	\end{equation*}
+	Integrate over \(r\):
+	\begin{equation*}
+	\int^3_0 f(r) * V_n(h, r) \diff r = \int^3_0 f(r) * \text{max}\{r, \mathcal{V}_{n+1}\} \diff r
+	\end{equation*}
+	Recognise that the LHS is equal to \(\mathcal{V}_n\) and the max function can be split into two integrals:
+	\begin{align*}
+	\mathcal{V}_n &= \int^{\mathcal{V}_{n+1}}_0 f(r) * \mathcal{V}_{n+1} \diff r
+	+ \int^3_{\mathcal{V}_{n+1}} f(r) * r \diff r
+	\end{align*}
 \end{enumerate}	
 	
 \end{document}
