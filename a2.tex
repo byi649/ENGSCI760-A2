@@ -1,0 +1,137 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper, total={6.5in, 9in}]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{listings}
+\setlength{\headheight}{15.2pt}
+\pagestyle{fancy}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{10pt}
+\setlist[enumerate,1]{label=\alph*}
+\setlist[enumerate,2]{label=(\roman*)}
+\definecolor{LGray}{gray}{0.9}
+\lstset{language=MATLAB, tabsize=2, breaklines=true, postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}, basicstyle=\linespread{0.7}\ttfamily, } 
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+
+
+
+\begin{document}
+\title{ENGSCI760 A2}
+\author{Benjamin Yi}
+\rhead{Benjamin Yi - byi649 - 925302651}
+\lhead{ENGSCI760 A2}
+	
+\section*{Question 1}
+\begin{enumerate}
+	\item Let \(c(x,t,a)\) be the cost of starting in state \(x\) in time \(t\) and taking action \(a\). \\
+	\begin{align*}
+	c(0,t,0) &= 0 \\
+	c(0,t,1) &= U + p(t)*2 \\
+	c(0,t,2) &= U + p(t)*5 \\ \\
+	c(1,t,0) &= D \\
+	c(1,t,1) &= p(t)*2 \\
+	c(1,t,2) &= p(t)*5 \\ \\
+	c(2,t,0) &= D \\
+	c(2,t,1) &= p(t)*2 \\
+	c(2,t,2) &= p(t)*5 \\
+	\end{align*}
+	
+	\item Stages: \(n \in (t, r)\) where \(t = 1, 2, \dots, 12\) is the time period in hours and \(r = 1000, 2000, \dots, 10000\) is the number of remaining doughuts. \\
+	States: \(x \in {0, 1, 2}\) corresponding to the mode of the machine. \\
+	Actions: \(a \in {0, 1, 2}\) corresponding to switching to the specified mode.\\
+	Rewards: Let us define \(f(a)\) such that \(f(a) = \{5 \text{ if } a=2, 2 \text{ if } a=1, 0 \text{ if } a=0\}\). The reward function is then: \\
+	\[
+	c_n(x,a) = \begin{dcases*}
+	U + f(a)*p(n)  & when $x=0, a \in \{1, 2\}$ \\
+	f(a)*p(n) & when $x \in \{1, 2\}, a \in \{1, 2\}$ \\
+	D & when $ x \in \{1, 2\}, a=0$ \\
+	0 & when $ x=0, a=0$ \\
+	\end{dcases*}
+	\]
+	
+	\item
+	\[
+	V_{13}(\cdot) = \begin{dcases*}
+	0 & when $r \geq 10000, x=0$ \\
+	D & when $r \geq 10000, x \in \{1, 2\}$ \\
+	\infty & otherwise\\
+	\end{dcases*}
+	\]
+	
+	\item \begin{equation*}
+	V_n(x, r) = \min_{a \in A}\bigg\{c_n(x, a) + \sum_{X_{n+1}} \rho_n(x, y, a)*V_{n+1}(y, r-1000*a)\bigg\}
+	\end{equation*}
+	where: \\
+	\[
+	\rho_n(x, y, a) = \begin{dcases*}
+	1 & when $y=a$ \\
+	0 & otherwise \\
+	\end{dcases*}
+	\]
+	which expands to: \\
+	\begin{equation*}
+	V_n(x, r) = \min\bigg\{c_n(x, 0) + V_{n+1}(0, r),\, c_n(x, 1) + V_{n+1}(1, r-1000),\, c_n(x, 2) + V_{n+1}(2, r-2000)\bigg\}
+	\end{equation*}
+	
+	\newpage
+	\item \subsection*{dynamic.m} \lstinputlisting{dynamic.m}
+	\newpage
+	\subsection*{stage\_cost.m} \lstinputlisting{stage_cost.m}
+	
+	\newpage
+	\item Using U = D = 10: \\ Optimal policy = 000111122110 ie enter mode 1 in time 4, enter mode 2 in time 8, enter mode 1 in time 10, shut down in time 12. This returns a final cost of \$592. \\ \\
+	Using U = D = 0: \\
+	Optimal policy = 000121022110 where entering modes follows the logic shown above. This returns a final cost of \$571. \\ \\
+	When there are no start-up and shut-down costs, the final cost is lower by \$21. This is due to the machine being able to take advantage of lower cost time periods without needing to worry about the cost of switching modes. We can see this in the extra start-up and shut-down which would normally be penalised by U and D.
+	
+	\item Redefine \(\rho\) as: \\
+	\[
+	\rho_n(x, y, a) = \begin{dcases*}
+	0.25 & when $x=0, y=0, a \in \{1, 2\}$ \\
+	0.75 & when $x=0, y=a \in \{1, 2\}$ \\
+	1 & when $x=1, y=a$ \\
+	0 & otherwise
+	\end{dcases*}
+	\]
+	Then for \(x \in \{1, 2\}\), it is unchanged:
+	\begin{equation*}
+	V_n(x, r) = \min\bigg\{c_n(x, 0) + V_{n+1}(0, r),\, c_n(x, 1) + V_{n+1}(1, r-1000),\, c_n(x, 2) + V_{n+1}(2, r-2000)\bigg\}
+	\end{equation*}
+	For \(x=0\):
+	\begin{align*}
+	V_n(0, r) = \min\bigg\{&c_n(0, 0) + V_{n+1}(0, r),\\
+	&0.75*(c_n(0, 1) + V_{n+1}(1, r-1000)) + 0.25*(c_n(0, 0) + V_{n+1}(0, r)),\\
+	&0.75*(c_n(0, 2) + V_{n+1}(2, r-2000)) + 0.25*(c_n(0, 0) + V_{n+1}(0, r))
+	\bigg\}
+	\end{align*}
+	
+	\newpage
+	\item \subsection*{dynamic.m} \lstinputlisting{dynamic_stochastic.m}
+	
+	\newpage
+	\item Policy = 001111121110, so we first attempt to start up the machine at time period 3. This is one period earlier than without potential failure, so this takes into account the possibility of faults by leaving some room for error.
+
+\end{enumerate}
+
+\section*{Question 2}
+\begin{enumerate}
+	\item \begin{align*}
+	V_N &= \text{max}\{\text{E}[r], 0\} \\
+	&= \text{E}[r] \\
+	&= \int^3_0 r * f(r) \diff r \\
+	&= \int^3_0 r * \bigg(\frac{6-2r}{9}\bigg) \diff r \\
+	&= \frac{1}{9} \bigg[3r^2-\frac{2}{3}r^3\bigg]^3_0 \\
+	&= 1
+	\end{align*}
+\end{enumerate}	
+	
+\end{document}
+
