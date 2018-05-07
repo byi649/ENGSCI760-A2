@@ -117,7 +117,7 @@
 	\item \subsection*{dynamic.m} \lstinputlisting{dynamic_stochastic.m}
 	
 	\newpage
-	\item Policy = 001111121110, so we first attempt to start up the machine at time period 3. This is one period earlier than without potential failure, so this takes into account the possibility of faults by leaving some room for error.
+	\item Policy = 111111121000, so we attempt to start up the machine as soon as possible, to account for potential failures.
 
 \end{enumerate}
 
@@ -148,8 +148,13 @@
 	Recognise that the LHS is equal to \(\mathcal{V}_n\) and the max function can be split into two integrals:
 	\begin{align*}
 	\mathcal{V}_n &= \int^{\mathcal{V}_{n+1}}_0 f(r) * \mathcal{V}_{n+1} \diff r
-	+ \int^3_{\mathcal{V}_{n+1}} f(r) * r \diff r
+	+ \int^3_{\mathcal{V}_{n+1}} f(r) * r \diff r \\
+	&= \frac{1}{9}\mathcal{V}_{n+1}\bigg[6r-r^2\bigg]^{\mathcal{V}_{n+1}}_0 + \frac{1}{9}\bigg[3r^2-\frac{2}{3}\bigg]^3_{\mathcal{V}_{n+1}} \\
+	&= \frac{1}{9}\bigg(6\mathcal{V}_{n+1}^2 - \mathcal{V}_{n+1}^3\bigg) + 1 - \frac{1}{9}\bigg(3\mathcal{V}_{n+1}^2-\frac{2}{3}\mathcal{V}_{n+1}^3\bigg) \\
+	&= 1 + \frac{1}{9}\bigg(3\mathcal{V}_{n+1}^2 - \frac{1}{3}\mathcal{V}_{n+1}^3\bigg) \\
+	&= 1 + \frac{1}{3}\mathcal{V}_{n+1}^2 - \frac{1}{27}\mathcal{V}_{n+1}^3
 	\end{align*}
+	This gives values of 3 and 27 for \(x\) and \(y\) respectively.
 \end{enumerate}	
 	
 \end{document}

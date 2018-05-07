@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500) (preloaded format=pdflatex 2018.5.7)  7 MAY 2018 14:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500) (preloaded format=pdflatex 2018.5.7)  8 MAY 2018 10:51
 entering extended mode
 **./a2.tex
 (a2.tex
@@ -417,10 +417,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 138--141
 
 [6] (a2.aux) ) 
 Here is how much of TeX's memory you used:
- 6328 strings out of 493303
- 87616 string characters out of 3136085
- 344834 words of memory out of 3000000
- 9789 multiletter control sequences out of 15000+200000
+ 6329 strings out of 493303
+ 87623 string characters out of 3136085
+ 345834 words of memory out of 3000000
+ 9790 multiletter control sequences out of 15000+200000
  6885 words of font info for 28 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,12n,43p,348b,1740s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -436,7 +436,7 @@ ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Progra
 m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program 
 Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Fil
 es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on a2.pdf (6 pages, 147401 bytes).
+Output written on a2.pdf (6 pages, 147852 bytes).
 PDF statistics:
  69 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

@@ -14,7 +14,7 @@
 % electricity prices.
 
 clear all;
-M=10000;
+M=1e6;
 
 U=0;
 D=0;
